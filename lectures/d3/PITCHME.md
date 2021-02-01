@@ -237,7 +237,7 @@ And the code...
 ```javascript
 var data = [100,200,300]; // can add new values
 
-window.onload = function() {
+$(document).ready(function() {
   document.getElementById('chart').setAttribute('width',300);
   document.getElementById('chart').setAttribute('height',data.length*60);
 
@@ -262,4 +262,419 @@ See code [here](http://localhost/d3/svgBarChart2.html)
 
 [@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex1.md)
 
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- **d3 Setup**
+- d3 Bar Chart
+- d3 Data Binding
+@olend
+
+
+---
+@title[d3 Setup]
+### d3 Setup
+
+@ul[](true)
+- Download d3 from [https://d3js.org/](https://d3js.org/)
+- OR use `d3` directly from [https://d3js.org/](https://d3js.org/)
+- Use it with a `<script>` tag like this...
+@ulend
+
+---
+
+```javascript
+<!doctype html>
+<html>
+<head>
+  <script type="text/javascript" src="d3.min.js"></script>
+</head>
+...
+...
+```
+OR
+```javascript
+<!doctype html>
+<html>
+<head>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+...
+...
+```
+
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- **d3 Bar Chart**
+- d3 Data Binding
+@olend
+
+
+---
+Previously we used these tags – `<svg>`, `<rect>` and `<text>` to draw a chart
+```html
+<html>
+<body>
+
+<svg width="300" height="200">
+<rect x="0" y="0" width="100" height="50" fill="steelblue" />
+<rect x="0" y="60" width="200" height="50" fill="steelblue" />
+<rect x="0" y="120" width="300" height="50" fill="steelblue" />
+
+<text x="10" y="35" font-size="20" fill="white">100</text>
+<text x="10" y="95" font-size="20" fill="white">200</text>
+<text x="10" y="155" font-size="20" fill="white">300</text>
+</svg>
+
+</body>
+</html>
+
+```
+
+[@fa[external-link]](http://localhost/d3/svgBarChart.html)
+
+---
+
+Let's use D3 this time...
+
+---
+`- d3BarChartJQ.html -`
+
+```html
+<!doctype html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="d3BarChartJQ.js"></script>  
+</head>
+
+<body>
+</body>
+
+</html>
+
+```
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ.html)
+
+---
+`- d3BarChartJQ.js 1/3 -`
+
+```javascript
+$(document).ready(function() {
+
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);
+  ...
+});
+```
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ.html)
+
+
+---
+`- d3BarChartJQ.js 2/3 -`
+
+```javascript
+$(document).ready(function() {
+
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);
+  svg.append("rect")
+      .attr("x",0)
+      .attr("y",0)
+      .attr("width",100)
+      .attr("height",50)
+      .attr("fill","steelblue");
+  ...
+});
+
+```
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ.html)
+
+---
+`- d3BarChartJQ.js 3/3 -`
+
+```javascript
+$(document).ready(function() {
+
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);
+  ...
+  svg.append("rect")
+      .attr("x",0).attr("y",60)
+      .attr("width",200).attr("height",50).attr("fill","steelblue");
+  svg.append("rect")
+      .attr("x",0).attr("y",120)
+      .attr("width",300).attr("height",50).attr("fill","steelblue");
+});
+
+```
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ.html)
+
+
+---
+@title[d3 Data Binding]
+### D3 Exercise 2 – D3 Fundamentals - Part 1
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex2.md)
+
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- **d3 Data Binding**
+@olend
+
+
+---
+
+`- d3BarChartJQ.html -`
+
+```html
+<!doctype html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script type="text/javascript" src="d3BarChartJQ.js"></script>  
+</head>
+<body>
+</body>
+</html>
+```
+
+---
+
+```javascript
+$(document).ready(function() {
+    var svg = d3.select("body").append("svg").attr("width",300).attr("height",200);
+    svg.append("rect")
+        .attr("x",0).attr("y",0)
+        .attr("width",100)
+        .attr("height",50).attr("fill","steelblue");
+    svg.append("rect")
+        .attr("x",0).attr("y",60)
+        .attr("width",200)
+        .attr("height",50).attr("fill","steelblue");
+    svg.append("rect")
+        .attr("x",0).attr("y",120)
+        .attr("width",300)
+        .attr("height",50).attr("fill","steelblue");    
+});
+```
+@[5,9,13](Previously bar values were static)
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+@ul[](false)
+- Let's get the data from an array instead
+@ulend
+
+```javascript
+$(document).ready(function() {
+    var dataset = [100, 200, 300];
+    var svg = d3.select("body").append("svg")
+                                .attr("width",300)
+                                .attr("height",200);
+    ...
+    ...
+});
+```
+@[2](dataset with values)
+@[*]()
+
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+@ul[](false)
+- Let's bind array data to `rect` elements using `data()`
+@ulend
+
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300];
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+							  .attr("height",200);
+  var elements = svg.selectAll("rect")
+					 .data(dataset);
+  console.log(elements);
+});
+```
+@[6,7]()
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ2.html)
+
+@ul[](true)
+- Wait - there are no `rect` elements in the `svg`!!
+- But, the array values are added to a d3 ``enter`` selection
+@ulend
+
+---
+@title[d3 Data Binding]
+### d3 **enter** selection
+
+@ul[](true)
+- The enter selection is a placeholder (array) for data items that have no corresponding DOM element
+- The enter selection is typically used to create missing elements corresponding to new data
+- We'll use the ``enter()`` function to get the data items and ...
+- bind them to SVG ``rect`` items.
+@ulend
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300];
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+							  .attr("height",200);
+  var elements = svg.selectAll("rect")
+					 .data(dataset);
+  elements.enter().append("rect");
+});
+```
+@[8](each data value in enter selection is associated with a rect)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ3.html)
+
+@ul[](true)
+- The number of data items determines the number of elements
+- a data driven document!!
+@ulend
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+Let's add the ``rect`` attributes...
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300];
+
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);                              
+  var elements = svg.selectAll("rect")
+                     .data(dataset);
+  elements.enter().append("rect")
+                   .attr("x",0)
+                   .attr("y",function(d,i){return i*60;})
+                   .attr("width",function(d){return d;})
+                   .attr("height",50)
+                   .attr("fill","steelblue");
+});
+```
+@[9,10](x)
+@[9,10,11](y - uses i (index))
+@[9,10,11,12](width - uses d (data value))
+@[9,10,11,12,13,14](height & fill)
+@[*]
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ4.html)
+
+---
+@title[d3 Data Binding]
+### d3 Data Binding
+
+Let's change the number of data values in the array...
+
+---
+@title[d3 Data Binding]
+
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300, 400];
+
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);                              
+  var elements = svg.selectAll("rect")
+                     .data(dataset);
+  elements.enter().append("rect")
+                   .attr("x",0)
+                   .attr("y",function(d,i){return i*60;})
+                   .attr("width",function(d){return d;})
+                   .attr("height",50)
+                   .attr("fill","steelblue");
+});
+```
+
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ5.html)
+
+
+@ul[](true)
+- The height and width of the 4th bar is missing
+@ulend
+
+---
+@title[d3 Data Binding]
+
+```javascript
+$(document).ready(function() {
+    var dataset = [100, 200, 300, 400];
+  
+    var svg = d3.select("body").append("svg")
+    .attr("width",function(){return Math.max(...dataset)})
+    .attr("height",function(){return dataset.length*60});                              
+    var elements = svg.selectAll("rect")
+                       .data(dataset);
+    elements.enter().append("rect")
+                     .attr("x",0)
+                     .attr("y",function(d,i){return i*60;})
+                     .attr("width",function(d){return d;})
+                     .attr("height",50)
+                     .attr("fill","steelblue");
+  }
+```
+@[4-6]()
+@[*]()
+[@fa[external-link]](http://localhost/d3/d3BarChartJQ6.html)
+
+
+---
+@title[d3 Data Binding]
+### D3 Exercise 3 – D3 Data Binding
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex3.md)
 
