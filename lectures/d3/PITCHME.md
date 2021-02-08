@@ -678,3 +678,280 @@ $(document).ready(function() {
 
 [@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex3.md)
 
+
+
+
+---
+@title[d3 Data Fetch]
+### d3 Data Fetch
+
+@ul[](true)
+- Previously, our static data values were stored in an array
+- d3 allows you to fetch data from numerous other sources
+- For example, you can fetch:
+  - JSON data
+  - .CSV data
+  - text
+  - etc.
+@ulend
+
+
+---
+@title[d3 Data Fetch]
+### d3 Data Fetch Functions
+
+Some d3 data fetch functions include:
+
+@ul[](true)
+- `d3.json()` - fetches JSON from specific URL
+- `d3.csv()` - fetches CSV from specific URL
+- `d3.text()` - fetches text from specific URL
+- `d3.html()` - fetches HTML from specific URL
+- others are [here](https://github.com/d3/d3-fetch/blob/master/README.md#api-reference)
+- Let's start with the `d3.json()` function...
+@ulend
+
+
+---
+@title[d3 Data Fetch]
+### d3 Data Fetch
+
+Let's get data from [http://localhost/d3/numbers.json](http://localhost/d3/numbers.json)
+
+```javascript
+[
+    {"value":100},
+    {"value":200},
+    {"value":300}
+]
+```
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+Provide the URL for the JSON file:
+
+```javascript
+d3.json("http://localhost/d3/numbers.json")
+```
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+Then get **ALL** JSON file contents:
+
+```javascript
+d3.json("http://localhost/d3/numbers.json")
+  .then(function(dataset)
+  {
+    console.log(dataset);
+  });
+```
+@[1](get the file data)
+@[1,2-5](when you get the data print to console)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3JSON0jq.html)
+
+@ul[](true)
+- Let's add this to our previous solution...
+@ulend
+
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+Our HTML file `d3JSON1jq.html`:
+
+```html
+<!doctype html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="d3JSON1jq.js"></script>
+</head>
+<body>
+</body>
+</html>
+```
+
+---
+
+```javascript
+$(document).ready(function() {
+    var svg = d3.select("body").append("svg")
+                               .attr("width",300)
+                               .attr("height",200);                                  
+    d3.json("http://localhost/d3/numbers.json")
+        .then(function(dataset) {
+        var elements = svg.selectAll("rect").data(dataset);
+
+        elements.enter().append("rect")
+                .attr("x",0)
+                .attr("y",function(d,i){return i*60;})
+                .attr("width",function(d){return d.value;})
+                .attr("height",50)
+                .attr("fill","steelblue");
+    });    
+});
+
+```
+@[5,6,15](get the JSON data)
+@[5,6,15,7-8](bind dataset as usual)
+@[5,6,15,7-8,9-14](add rectangle for each value)
+@[12](d is an object, so d.value is used to get value)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3JSON1jq.html)
+
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+Let's get the data from a database using PHP this time...
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+`- d3JSON2.php -`
+```php
+<?php
+$connection = mysqli_connect("localhost","root","");
+mysqli_select_db($connection,"d3");
+$result = mysqli_query($connection,"SELECT * FROM d3table");
+
+$rs = array();
+while($rs[] = mysqli_fetch_assoc($result)) {
+}
+mysqli_close($connection);
+unset($rs[count($rs)-1]);  //removes a null value
+print(json_encode($rs));
+?>
+```
+@[3](database is called d3)
+@[3,4](table is d3table)
+@[*](returns rows as JSON data)
+[@fa[external-link]](http://localhost/d3/d3JSON2.php)
+
+
+---
+@title[d3 Data Fetch]
+### d3.JSON function
+
+Our HTML file `d3JSON2jq.html`:
+
+```html
+<!doctype html>
+<html>
+  <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="d3JSON2jq.js"></script>
+</head>
+<body>
+</body>
+</html>
+```
+
+---
+
+```javascript
+$(document).ready(function() {
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);                                  
+  d3.json("http://localhost/d3/d3JSON2jq.php")
+     .then(function(dataset)
+  {
+    var elements = svg.selectAll("rect")
+                      .data(dataset);   
+    elements.enter().append("rect")
+                    .attr("x",0)
+                    .attr("y",function(d,i){return i*60;})
+                    .attr("width",function(d){return d.value;})
+                    .attr("height",50)
+                    .attr("fill","steelblue");        
+  });
+});
+```
+@[5,6](get data from PHP script this time)
+@[*](everything else is same)
+
+[@fa[external-link]](http://localhost/d3/d3JSON2jq.html)
+
+
+
+---
+@title[d3 Data Fetch]
+### d3.csv function
+
+Let's take this CSV file `d3table.csv` and render it with d3
+
+```javascript
+name,value
+"Apples",100
+"Pears",200
+"Oranges",300
+```
+
+---
+@title[d3 Data Fetch]
+### d3.csv function
+
+Our HTML file `d3CSV1jq.html`:
+
+```html
+<!doctype html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="d3CSV1jq.js"></script>
+</head>
+<body>
+</body>
+</html>
+```
+
+---
+
+```javascript
+$(document).ready(function() {
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);                                  
+  d3.csv("http://localhost/d3/d3table.csv")
+     .then(function(dataset)
+  {
+    var elements = svg.selectAll("rect")
+                      .data(dataset);   
+    elements.enter().append("rect")
+                    .attr("x",0)
+                    .attr("y",function(d,i){return i*60;})
+                    .attr("width",function(d){return d.value;})
+                    .attr("height",50)
+                    .attr("fill","steelblue");        
+  });
+});
+
+```
+@[5,6](get data from the CSV file)
+@[*](everything else is same)
+
+[@fa[external-link]](http://localhost/d3/d3CSV1jq.html)
+
+
+
+
+---
+@title[d3 Data Binding]
+### D3 Exercise 4 – D3 Data Fetch
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex4.md)
+
