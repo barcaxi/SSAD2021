@@ -955,3 +955,118 @@ $(document).ready(function() {
 
 [@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex4.md)
 
+
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- d3 Data Binding
+- **d3 Scaling**
+@olend
+
+
+---
+@title[d3 Scaling]
+### D3 Scaling
+
+> Scaling is the process of making chart data fit the space provided
+
+@ul[](true)
+- For example...
+@ulend
+
+---
+@title[d3 Scaling]
+### D3 Scaling
+
+![](images/d3scale1.png)
+
+@ul[](true)
+- The `<svg width=600>`
+- But the largest bar is `300`
+- We can use **linear scaling** to use all space provided...
+@ulend
+
+
+---
+@title[Linear Scaling]
+
+Our code so far
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300];
+  var svg = d3.select("body").append("svg")
+                              .attr("width",600)
+                              .attr("height",170);                              
+  var elements = svg.selectAll("rect")
+                     .data(dataset);                     
+  elements.enter().append("rect")
+                   .attr("x",0)
+                   .attr("y",function(d,i){return i*60;})
+                   .attr("width",function(d){return d;})
+                   .attr("height",50)
+                   .attr("fill","steelblue");
+});
+```
+@[2](largest value is 300)
+@[2,4](width is 600)
+@[2,4,11](rect width taken from dataset is not scaled)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3scale1JQ.html)
+
+---
+@title[Linear Scaling]
+### Linear Scaling
+
+@ul[](true)
+- We need to use the ``d3.scaleLinear()`` function 
+- Linear values go from ``-n..n``
+- All scales need to specify two values:
+  - a domain (data values)
+  - a range (pixel values)
+- For example...
+@ulend
+
+---
+
+```javascript
+$(document).ready(function() {
+  var dataset = [100, 200, 300];
+  var svg = ...;
+  var elements=...;
+  var w = d3.scaleLinear()
+             .domain([0,300])
+             .range([0,600]);
+  elements.enter().append("rect")
+                   .attr("x",0)
+                   .attr("y",function(d,i){return i*60;})
+                   .attr("width",function(d){return w(d);})
+                   .attr("height",50)
+                   .attr("fill","steelblue");
+});
+```
+@[5](w is a reference to our scaling)
+@[5](we're using a linear scale)
+@[2,5,6](the domain is the min .. max range of data values)
+@[2,5,6,7](the range is the min .. max range of svg pixel values)
+@[2,5,6,7,11](our function w() is applied to each d value)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3scale2JQ.html)
+
+
+---
+@title[d3 Linear Scaling]
+### D3 Exercise 5 – D3 Linear Scaling
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex5.md)
+
+
