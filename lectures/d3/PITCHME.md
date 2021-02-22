@@ -1556,3 +1556,166 @@ svg.append("path")
 
 [@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex6.md)
 
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- d3 Data Binding
+- d3 Scaling
+- d3 Path
+- d3 Generators
+- **d3 Grouping**
+@olend 
+
+---
+@title[Groups]
+### Groups
+
+@ul[](true)
+- The SVG _group_ element is defined as `<g>` 
+- Use it to group SVG elements together
+- You group SVG elements to perform @size[1.5em](transformations)
+- Example transformations include:
+  - translating (moving)
+  - rotating 
+  - scaling 
+- Let's see an example...
+@ulend
+
+---
+@title[Groups]
+<!-- ### Groups -->
+```html
+<svg width="300" height="200">
+ <rect x="0" y="0" width="300" height="200" fill="red" />
+ <circle cx="150" cy="100" r="80" fill="green" />
+ <text x="150" y="125" font-size="60" text-anchor="middle">SVG</text>
+</svg>
+```
+![](images/svgExample1.png)
+@ul[](true)
+- Let's move everything right 50 pixels (brute force)...
+@ulend
+
+---
+@title[Groups]
+<!-- ### Groups -->
+
+```html
+<svg width="350" height="200">
+ <rect x="50" y="0" width="300" height="200" fill="red" />
+ <circle cx="200" cy="100" r="80" fill="green" />
+ <text x="200" y="125" font-size="60" text-anchor="middle">SVG</text>
+</svg>
+```
+
+![](images/svgExample2.png)
+
+
+
+@ul[](true)
+- A better solution exists using groups...
+@ulend
+
+---
+@title[Groups]
+<!-- ### Groups -->
+
+Group the elements and translate(move) them
+
+```html
+<svg width="350" height="200">
+ <g transform="translate(50,0)">
+  <rect x="0" y="0" width="300" height="200" fill="red" />
+  <circle cx="150" cy="100" r="80" fill="green" />
+  <text x="150" y="125" font-size="60" text-anchor="middle">SVG</text>
+ <g>
+</svg>
+```
+@[2,6](group & translate 50 pixels right)
+@[*]()
+
+![](images/svgExample2.png)
+
+---
+@title[Groups]
+### Groups
+
+- Let's see D3 use groups...
+
+
+---
+```javascript
+$(document).ready(function() {
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);
+  var barChart = svg.append("g");
+  barChart.append("rect")
+      .attr("x",0).attr("y",0)
+      .attr("width",100).attr("height",50).attr("fill","steelblue");
+  barChart.append("rect")
+      .attr("x",0).attr("y",60)
+      .attr("width",200).attr("height",50).attr("fill","steelblue");
+  barChart.append("rect")
+      .attr("x",0).attr("y",120)
+      .attr("width",300).attr("height",50).attr("fill","steelblue");
+});
+```
+@[5](add group element to svg)
+@[5-14](add elements to group)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/group1JQ.html)
+
+@ul[](true)
+- Let's move the bar chart...
+@ulend
+
+---
+```javascript
+$(document).ready(function() {
+  var svg = d3.select("body").append("svg")
+                              .attr("width",300)
+                              .attr("height",200);
+  var barChart = svg.append("g")
+                     .attr("transform","translate(50,0)");
+  barChart.append("rect")
+      .attr("x",0).attr("y",0)
+      .attr("width",100).attr("height",50).attr("fill","steelblue");
+  barChart.append("rect")
+      .attr("x",0).attr("y",60)
+      .attr("width",200).attr("height",50).attr("fill","steelblue");
+  barChart.append("rect")
+      .attr("x",0).attr("y",120)
+      .attr("width",300).attr("height",50).attr("fill","steelblue");
+});
+```
+@[5,6](add group and apply translation)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/group2JQ.html)
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- d3 Data Binding
+- d3 Scaling
+- d3 Path
+- d3 Generators
+- d3 Grouping
+- **d3 Axis**
+@olend 
+
+
