@@ -437,7 +437,7 @@ $(document).ready(function() {
 @title[d3 Data Binding]
 ### D3 Exercise 2 – D3 Fundamentals - Part 1
 
-[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex2.md)
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex2.md)
 
 
 
@@ -707,7 +707,7 @@ Some d3 data fetch functions include:
 - `d3.csv()` - fetches CSV from specific URL
 - `d3.text()` - fetches text from specific URL
 - `d3.html()` - fetches HTML from specific URL
-- others are [here](https://github.com/d3/d3-fetch/blob/master/README.md#api-reference)
+- others are [here](https://github.com/d3/d3-fetch/blob/main/README.md#api-reference)
 - Let's start with the `d3.json()` function...
 @ulend
 
@@ -953,7 +953,7 @@ $(document).ready(function() {
 @title[d3 Data Binding]
 ### D3 Exercise 4 – D3 Data Fetch
 
-[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex4.md)
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex4.md)
 
 
 
@@ -1067,6 +1067,492 @@ $(document).ready(function() {
 @title[d3 Linear Scaling]
 ### D3 Exercise 5 – D3 Linear Scaling
 
-[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex5.md)
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex5.md)
 
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- d3 Data Binding
+- d3 Scaling
+- **d3 Path**
+@olend
+
+
+---
+@title[Path]
+### Path
+
+@ul(true)
+- Paths are important in D3
+- A path is essentially a @size[1.5em](line)
+- Those lines can be 
+  - curved
+  - straight
+  - filled
+  - open 
+  - closed 
+- Paths are needed to create advanced graphics in D3
+@ulend
+
+
+---
+@title[Path]
+### Path
+
+@ul[](false)
+- We've seen how SVG elements need several mandatory attributes:
+@ulend
+
+```html
+<line x1='0' y1='0' x2='200' y2='200' 
+                    stroke='black' stroke-width='2' />
+```
+@[1](x1, y1, x2, y2 are mandatory)
+@[*]()
+
+---
+@title[Path]
+### Path
+
+@ul[](false)
+- `path` has one mandatory attribute:
+@ulend
+
+```html
+<path d="M0 0 L100 0 L100 100 L0 100 Z" />
+```
+
+@ul[](true)
+- `d` (or data)
+- but `d` could have 100's or 1000's of points
+- let's draw something...
+@ulend
+
+
+---
+@title[Path]
+### Path
+
+```html
+<path d="M0 0 L100 0 L100 100 L0 100 Z" />
+```
+draws this:
+
+![](images/path1.png)
+
+
+@ul[](true)
+- another example...
+@ulend
+
+
+---
+@title[Path]
+### Path
+
+```html
+<path d="M0 100 L50 0 L100 100 Z" stroke='red' fill='blue' />
+```
+draws this:
+
+![](images/path2.png)
+
+
+@ul[](true)
+- Path commands...
+@ulend
+
+
+---
+@title[Path Commands]
+### Path Commands
+
+```html
+<path d="M0 100 L50 0 L100 100 Z" stroke='red' fill='blue' />
+```
+
+@ul[](false)
+- There are quite a few [path commands](https://www.w3schools.com/graphics/svg_path.asp):
+  - M = moveto
+  - L = lineto
+  - Z = closepath
+  - C = curveto, etc.
+@ulend
+@ul[](true)
+- Uppercase letter indicates coordinates have  **absolute** position
+- Lowercase letter indicates coordinates have  **relative** position...
+
+---
+@title[Path]
+### Path
+
+```html
+<path d="M0 0 l 100 0 l 0 100 l -100 0 Z" />
+```
+draws this:
+
+![](images/path1.png)
+
+
+
+---
+@title[d3 Path]
+### D3 Exercise 6 – D3 Path - Part 1
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex6.md)
+
+
+---
+@title[Contents]
+### Contents
+
+@ol[](false)
+- What is D3?
+- SVG
+- d3 Setup
+- d3 Bar Chart
+- d3 Data Binding
+- d3 Scaling
+- d3 Path
+- **d3 Generators**
+@olend  
+
+---
+@title[Generators]
+### Generators
+
+@ul[](true)
+- Paths can start to get complex very quicky
+- We'll use @size[1.5em](generators) to help
+- Let's see an example...
+@ulend
+
+
+---
+@title[Path Generators]
+### Path Generators
+
+Using SVG `<line>`
+```html
+<svg width="300" height="200">
+  <line x1="0" y1="0" x2="50" y2="50" stroke="blue" />
+  <line x1="50" y1="50" x2="100" y2="0" stroke="blue" />
+  <line x1="100" y1="0" x2="150" y2="50" stroke="blue" />
+  <line x1="150" y1="50" x2="200" y2="0" stroke="blue" />
+</svg>
+```
+
+![](images/path3.png)
+
+---
+@title[Path Generators]
+### Path Generators
+
+Using SVG `<path>`
+```html
+<svg width="300" height="200">
+  <path d="M0 0 L50 50 L100 0 L150 50 L200 0" 
+        stroke="blue" fill='none' />
+</svg>
+```
+
+![](images/path3.png)
+
+
+---
+@title[Path Generators]
+### Path Generators
+
+@ul[](true)
+- All generators automatically create the `d` attribute values for `<path>`
+- Let's use the D3 line generator `d3.line()` first...
+@ulend
+
+
+---
+@title[Path Generators]
+<!-- ### Path Generators -->
+
+Put the data coordinates into an array
+
+```javascript
+var dataset = [ {x: 0, y: 0},
+                {x: 50, y: 50},
+                {x: 100, y: 0},
+                {x: 150, y: 0},
+                {x: 200, y: 0}
+              ];
+
+```
+
+---
+@title[Path Generators]
+
+- Let's declare the line generator function
+
+```javascript
+var dataset = [ {x: 0, y: 0}, {x: 50, y: 50}, ... ];
+
+var line = d3.line()
+              .x()
+              .y();
+```
+@ul[](true)
+- `d3.line()` is the line generator
+- `line` is a function reference
+- we'll provide it the appropriate `x` and `y` values...
+@ulend
+
+
+---
+@title[Path Generators]
+
+- Get the `x,y` values from the `dataset` objects
+
+```javascript
+var dataset = [ {x: 0, y: 0}, {x: 50, y: 50}, ... ];
+
+var line = d3.line()
+              .x(function(d){
+                   return d.x;
+                 }
+              )
+              .y(function(d) {
+                   return d.y;
+                 }
+              );
+```
+
+@ul[](true)
+- Let's use the `line` generator function to draw our lines...
+@ulend
+
+
+---
+@title[Path Generators]
+
+- Call our `line` generator function with `dataset`
+
+```javascript
+var dataset = [ {x: 0, y: 0}, {x: 50, y: 50}, ... ];
+
+var line = d3.line().x(function(d){
+                         return d.x; })
+                    .y(function(d) {
+                         return d.y; });
+
+var svg = d3.select("#mysvg");
+svg.append("path")
+    .attr('d',line(dataset))
+    .attr('fill','none')
+    .attr('stroke','blue');
+```
+@[1](Dataset of coordinates)
+@[1,3-6](Declare line generator)
+@[1,3-6,8](Get a reference to a svg element)
+@[1,3-6,8,9-12](Use the generator to create d attribute values)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3lineGeneratorJQ.html)
+
+
+---
+@title[Path Generators]
+### Path Generators
+
+
+@ul[](true)
+- We could also use the generator to draw curved lines...
+@ulend
+
+
+---
+@title[Path Generators]
+
+
+```javascript
+var dataset = [ {x: 0, y: 0}, {x: 50, y: 50}, ... ];
+
+var line = d3.line().x(function(d){
+                         return d.x; })
+                    .y(function(d) {
+                         return d.y; })
+                    .curve(d3.curveCardinal);
+
+var svg = d3.select("#mysvg");
+svg.append("path")
+    .attr('d',line(dataset))
+    .attr('fill','none')
+    .attr('stroke','blue');
+```
+@[7]()
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3lineGeneratorJQ.html)
+
+See more about types of curves [here](https://github.com/d3/d3-shape/blob/master/README.md#curves)
+
+
+
+---
+@title[d3 Path]
+### D3 Exercise 6 – D3 Path - Part 2
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/master/exercises/D3Ex6.md)
+
+
+
+---
+@title[Path Generators]
+### Path Generators
+
+
+@ul[](true)
+- D3 has lots of other generators:
+  - area
+  - arc
+  - histogram
+  - line
+  - pie
+  - stack
+  - etc.
+- See the [API](https://github.com/d3/d3/blob/master/API.md) for more info
+- Let's have a look at `d3.area()`...
+@ulend
+
+---
+@title[Path Generators]
+### Area Generator
+
+- An area chart for these values `5,22,28,42,53,61,52,36,38,34,40,19,23,20,...`
+
+![](images/path4.png)
+
+
+---
+@title[Area Generator]
+### Area Generator
+
+Put the data coordinates into an array
+
+```javascript
+var dataset = [5,22,28,42,53,61,52,36,
+               38,34,40,19,23,20,13,5,
+               5,7,6,1,1,2,1];
+
+```
+
+---
+@title[Path Generators]
+
+- Let's declare the area generator function
+
+```javascript
+var dataset = [5,22,28,42,53,61,52,36, ...];
+
+var area = d3.area()
+              .x()
+              .y0()
+              .y1();              
+```
+
+@ul[](true)
+- `d3.area()` needs 2 _y_ values
+  - `y0` sets value of the lower line (usually flat)
+  - `y1` sets value of the upper line 
+- Let's provide the `y` values...
+@ulend
+
+
+---
+@title[Path Generators]
+
+```javascript
+var dataset = [5,22,28,42,53,61,52,36, ...];
+
+var height = $("#svg").attr('height');
+var area = d3.area()
+              .x()
+              .y0(height)
+              .y1(function(d) {
+                return height-d;
+              });
+```
+
+@ul[](true)
+- `y0` is `<svg>` height 
+- `y1` is current value from `dataset`
+- Let's provide the `x` values...
+@ulend
+
+
+---
+@title[Path Generators]
+
+
+- The `x` value uses the array index value & a spacing value
+
+```javascript
+var dataset = [5,22,28,42,53,61,52,36, ...];
+
+var svg = d3.select("#mysvg");
+var height = $("#svg").attr('height');
+var area = d3.area()
+              .x(function(d,i){ 
+                   return i*10;
+                 })
+              .y0(height)
+              .y1(function(d) {
+                return height-d;
+              });
+svg.append("path")
+    .attr('d',area(dataset));
+```
+
+@ul[](true)
+- Let's use the `area` generator function to draw our chart...
+@ulend
+
+---
+@title[Path Generators]
+
+```javascript
+var dataset = [5,22,28,42,53,61,52,36, ...];
+
+var svg = d3.select("#mysvg");
+var height = $("#svg").attr('height');
+var area = d3.area()
+              .x(function(d,i){ 
+                   return i*10;
+                 })
+              .y0(height)
+              .y1(function(d) {
+                return height-d;
+              });
+svg.append("path")
+    .attr('d',area(dataset));
+```
+@[1](Dataset of coordinates)
+@[1,3](Get reference to svg)
+@[1,3,4](Get svg height)
+@[1,3,4,5-12](Declare the area generator)
+@[1,3,4,5-12,13-14](Use the generator to create d attribute values)
+@[*]()
+
+[@fa[external-link]](http://localhost/d3/d3areaGenerator.html)
+
+
+---
+@title[d3 Path]
+### D3 Exercise 6 – D3 Path - Part 3
+
+[@fa[external-link]](https://github.com/noucampdotorgSSAD2021/d3/blob/main/exercises/D3Ex6.md)
 
